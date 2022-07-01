@@ -6,6 +6,7 @@
 #include "gettime.h"
 #include "memory_manage.h"
 #include "modulation.h"
+#include <cfloat>
 
 #define NUM_SYMBOLS 1000   // number of symbols to modulate and demodulate
 #define NUM_ITERATIONS 50  // number of iterations to run tests

@@ -125,12 +125,6 @@ bool PacketTXRX::StartTxRx(Table<char>& buffer, size_t packet_num_in_buffer,
   return true;
 }
 
-void PacketTXRX::SendBeacon(int tid, size_t frame_id) {
-  /// \TODO: implement beacon transmission for DPDK mode
-  unused(tid);
-  unused(frame_id);
-}
-
 void PacketTXRX::LoopTxRx(size_t tid) {
   size_t rx_slot = 0;
   size_t prev_frame_id = SIZE_MAX;

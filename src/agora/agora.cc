@@ -8,6 +8,8 @@
 #include <cmath>
 #include <memory>
 
+#define    DELTA(a,b)              (b - a)
+
 static const bool kDebugDeferral = true;
 static const size_t kDefaultMessageQueueSize = 512;
 static const size_t kDefaultWorkerQueueSize = 256;
@@ -855,7 +857,25 @@ void Agora::Worker(int tid) {
   size_t cur_qid = 0;
   size_t empty_queue_itrs = 0;
   bool empty_queue = true;
+  // uint64_t start_jys = 0;
+  // uint64_t end_jys = 0;
+  // FILE * file_for_task;
+  // FILE * file_for_empty_loop;
+  // char file_name_tmp[80];
+  // int loop_num_jys = 0;
+
+  // sprintf(file_name_tmp, "/home/xglab/yunshan/jys_file_for_task_%d.log", tid);
+  // file_for_task = fopen(file_name_tmp, "w");
+  // sprintf(file_name_tmp, "/home/xglab/yunshan/jys_file_for_empty_loop_%d.log", tid);
+  // file_for_empty_loop = fopen(file_name_tmp, "w");
+  // printf("file make jys!\n");
+
   while (this->config_->Running() == true) {
+    // ++loop_num_jys;
+    // if (loop_num_jys % 1000 == 0){
+    //     start_jys = __rdtsc();
+    // }
+
     for (size_t i = 0; i < computers_vec.size(); i++) {
       if (computers_vec.at(i)->TryLaunch(*GetConq(events_vec.at(i), cur_qid),
                                          complete_task_queue_[cur_qid],
@@ -876,8 +896,16 @@ void Agora::Worker(int tid) {
         }
         empty_queue_itrs = 0;
       }
+      // if (loop_num_jys % 1000 == 0){
+      //     end_jys = __rdtsc();
+      //     fprintf(file_for_empty_loop, "%I64lu\n", DELTA(start_jys, end_jys));
+      // }
     } else {
       empty_queue = true;
+      // if (loop_num_jys % 1000 == 0){
+      //     end_jys = __rdtsc();
+      //     fprintf(file_for_task, "%I64lu\n", DELTA(start_jys, end_jys));
+      // }
     }
   }
   MLPD_SYMBOL("Agora worker %d exit\n", tid);
